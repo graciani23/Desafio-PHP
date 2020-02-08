@@ -1,0 +1,21 @@
+header {
+    background-color: #343a40!important
+}
+
+nav .nav .nav-link a {
+    color: pink;
+}
+
+.config {
+    display: flex;
+}
+
+.config div {
+    margin: 5px;
+    width: 50%;
+}
+
+.input-group button {
+    width: 100%;
+}
+
