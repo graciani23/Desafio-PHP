@@ -1,0 +1,37 @@
+header {
+    background-color: #343a40!important
+}
+
+nav .nav .nav-link a {
+    color: pink;
+}
+
+.config {
+    display: flex;
+}
+
+.config div {
+    margin: 5px;
+    width: 50%;
+}
+
+.input-group button {
+    width: 100%;
+}
+
+.config-login {
+    width: 50%;
+    margin: 20px auto 20px auto;
+}
+
+main .config-login button {
+    width: 100%;
+}
+
+.config-user {
+    width: 50%;
+    margin: 20px auto 20px auto;
+}
+.list-group-item {
+     display: flex;
+ }
