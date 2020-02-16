@@ -1,30 +1,13 @@
 <?php
-    
+   $produtos = file_get_contents('produtos.json');
+   $produtodec = json_decode($produtos, true); 
+   
+   //var_dump($_GET);
 
-   // var_dump($produto);
+   
+   foreach ($produtodec as $produto) :
+    if ($produto['id'] == $_GET['id']) {
 
-
-    // verificar se o formulário foi enviado
-    if(isset($_POST['editar-produto'])) {
-        // verificar campos preenchidos
-        if($_POST['nome'] != "" && $_POST['descricao'] != "" && $_POST['preco'] != "") {
-            // prepara a query
-            $query = $conexaoDB->prepare('UPDATE product SET nome =:nome, descricao = :descricao, preco = :preco WHERE id = :id');
-            var_dump($query);
-
-            $resultado = $query->execute([
-                ":id" => $_GET['id'],
-                ":nome" => $_POST['nome'],
-                ":descricao" => $_POST['descricao'],
-                ":preco" => $_POST['preco'],
-                ":imagem" => $_POST['foto']
-            ]);
-            var_dump($resultado);
-
-            // se tudo der certo, redireciona para a lista de produtos
-            header('location: indexProduct.php');
-        }
-    }    
 ?>
 
 <!DOCTYPE html>
@@ -45,11 +28,12 @@
     </header>
     <main class="container">
         <h1>Produto</h1>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multpart/form-data">
+           
             <div class="config">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
-                    <input name="nome" id="nomeProduto" type="text" class="form-control" required value="<?php echo $produto['nome']; ?>">
+                    <input name="nome" id="nomeProduto" type="text" class="form-control"  value="<?php echo $produto['nome']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Preço</label>
@@ -74,7 +58,10 @@
             <br>
             <div class="input-group">
                 <button name="editar-produto" class="btn btn-warning">Editar</button>
-            </div>
+            </div>   
+    <?php }
+        endforeach;
+    ?>
         </form>
     </main>
 

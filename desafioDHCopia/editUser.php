@@ -1,3 +1,12 @@
+<?php
+    $usuarios = file_get_contents('usuarios.json');
+    $usuariosdec = json_decode($usuarios, true);
+
+    foreach ($usuariosdec as $usuario) :
+        if ($usuario['id'] == $_GET['id']) {
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,15 +27,14 @@
         <div class="container">
             <div class="row">
                 <div class="config-user">
-                    <h2>Adicionar Usuário</h2>
-                    <form action="" method="post">                      
+                    <h2>Editar Usuário</h2>
+                    <form action="" method="post" enctype="multpart/form-data">                      
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nome</label>
-                            <input name="nome" id="nomeProduto" type="text" class="form-control" required>
-                            <label for="email">E-mail</label>
-                            <input type="email" name="email" id="email" class="form-control">
-                        </div>
-                                             
+                            <input name="nome" id="nome" type="text" class="form-control"  value="<?php echo $usuario['nome']; ?>">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input name="email" id="email" type="email" class="form-control"  value="<?php echo $usuario['email']; ?>">
+                        </div>                     
                         <div class="form-group">
                             <label for="senha">Senha</label><br>
                             <small>Mínimo de 6 caracteres</small>
@@ -45,7 +53,11 @@
                             <button name="cadastro-produto" class="btn btn-warning">Editar</button>
                         </div>
                     </form>
-                            
+                    <?php }
+                    
+                    endforeach; 
+                    
+                    ?>    
                 </div>
             </div>      
         </div>

@@ -34,4 +34,11 @@ main .config-login button {
 }
 .list-group-item {
      display: flex;
+     justify-content: center;
+     align-items: center;
+     align-content: center;
+ }
+
+ .list-group-item div {
+     width: 50%;
  }

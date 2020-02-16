@@ -10,8 +10,18 @@
              file_put_contents('usuarios.json', "[]");
          } 
          $usuariosdec = json_decode($usuarios);
+
+         // inclusão id
+         $ultimaPosicao = count($usuariosdec) + 1;
+         $id = ["id" => 1];
+        if (count($usuariosdec) == 0) {
+            $result = array_merge($id, $usuario);
+        } else {
+            $id = ["id" => $ultimaPosicao];
+            $result = array_merge($id, $usuario);
+        }
          
-         $usuariosdec[] = $usuario;
+         $usuariosdec[] = $result;
  
          $inserir = json_encode($usuariosdec);
  
@@ -51,12 +61,12 @@
                              
                         ?>
                         <li class="list-group-item">
-                            <div>
+                            <div class="info">
                                 <?php echo $usuario['nome']."</br>";
                                 echo $usuario['email']; ?>
                             </div>
-                            <div>
-                                <a href="editUser.php" class="btn btn-primary">Editar</a>
+                            <div class="botoes">
+                                <a href="editUser.php?id=<?php echo $usuario['id']; ?>" class="btn btn-primary">Editar</a>
                                 <a href="#" class="btn btn-danger">Excluir</a>
                             </div>
                         </li>

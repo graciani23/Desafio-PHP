@@ -1,8 +1,6 @@
 <?php
     session_start();
     $produto = $_POST;
-    //$_SESSION['cadastro'] = $baseProduto;
-    //$baseProduto = $_SESSION['cadastro'];
 
     // verificar se o formulário foi enviado
     if(isset($_POST['cadastro-produto'])) {  
@@ -12,15 +10,21 @@
             file_put_contents('produtos.json', "[]");
         } 
         $produtodec = json_decode($produtos);
-        
-        $produtodec[] = $produto;
+
+        // inclusão id
+            $ultimaPosicao = count($produtodec) + 1;
+            $id = ["id" => 1];
+            if (count($produtodec) == 0) {
+                $result = array_merge($id, $produto);
+            } else {
+                $id = ["id" => $ultimaPosicao];
+                $result = array_merge($id, $produto);
+            }
+        $produtodec[] = $result;
 
         $inserir = json_encode($produtodec);
 
         file_put_contents('produtos.json', $inserir);
-
-        var_dump($produto);
-        var_dump($produtodec);
     }
 ?>
 
