@@ -19,3 +19,16 @@ nav .nav .nav-link a {
     width: 100%;
 }
 
+.config-login {
+    width: 50%;
+    margin: 20px auto 20px auto;
+}
+
+main .config-login button {
+    width: 100%;
+}
+
+.config-user {
+    width: 50%;
+    margin: 20px auto 20px auto;
+}

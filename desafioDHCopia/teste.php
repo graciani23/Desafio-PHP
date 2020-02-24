@@ -1,12 +1,24 @@
 <?php
+    $produtos = $_FILES['arquivo'];
+    $msg = false;
+    if(isset($_FILES['arquivo'])){
+        $extensao = strtolower(substr($_FILES['arquivo']['name'], -4)); //pega a extensão do arquivo
+        $novo_nome = md5(time()) . $extensao; //define o nome do arquivo
+        $diretorio = "upload/"; //define o diretório para onde enviaremos o arquivo
 
+        move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio.$novo_nome); //efetua o upload
 
-    $nome = $_FILES["foto"]["name"];
-    $nomeTemp = $_FILES["foto"]["tmp_name"];
-    $diretorio = dirname( assets );
-    $nomeDaPasta = "/img/";
-    $caminhoCompleto = $diretorio.$nomeDaPasta.$nome;
-    move_uploaded_file($nomeTemp, $caminhoCompleto);
+        $imagens = $novo_nome;
+        if(isset($_POST['salvar'])) {  
+            $imagens = file_get_contents('imagens.json');
+            if ($imagens === false) {
+                file_put_contents('imagens.json', "[]");
+            } 
+            $produtodec = json_decode($imagens);
+        }
+    }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -25,19 +37,9 @@
     </header>
     <main class="container">
         <h1>Adicionar Produto</h1>
-        <form action="" method="post" enctype="multpart/form-data">
-            
-            <div class="input-group">
-                <div class="custom-file">
-                    <input type="file" class="form-control" name="foto" id="foto">
-                    <label class="custom-file-label" for="foto">Selecione a foto</label>
-                </div>
-                
-            </div>
-            <br>
-            <div class="input-group">
-                <button name="cadastro-produto" class="btn btn-primary">Adicionar</button>
-            </div>
+        <form action="teste.php" method="post" enctype="multpart/form-data">
+        Arquivo: <input type="file" name="arquivo">
+        <input name="salvar" type="submit" value="Salvar">
         </form>
         <?php 
         

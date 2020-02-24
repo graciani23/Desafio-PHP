@@ -1,18 +1,1 @@
-[
-    {
-        "id": 1,
-        "nome": "Mochila",
-        "preco": "150",
-        "descricao": "Mochila Hang Loose",
-        "foto": "mochila_fem.jpg",
-        "cadastro-produto": ""
-    },
-    {
-        "id": 2,
-        "nome": "Iphone7",
-        "preco": "4000",
-        "descricao": "Iphone7 vermelho Apple",
-        "foto": "iphone.jpg",
-        "cadastro-produto": ""
-    }
-]
+[{"id":1,"nome":"Mochila","preco":"150","descricao":"Mochila Hang Loose","foto":"mochila_fem.jpg","cadastro-produto":""},{"id":2,"nome":"Iphone7","preco":"4000","descricao":"Iphone7 vermelho Apple","foto":"iphone.jpg","cadastro-produto":""},{"id":3,"nome":"MacBook","preco":"22000","descricao":"MacBook","foto":"mac.jpg","cadastro-produto":""}]

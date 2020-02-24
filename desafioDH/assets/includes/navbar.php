@@ -7,20 +7,20 @@
         <div class="collapse navbar-collapse" id="navbarNav" style="margin-top: 13px">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link text-warnings" href="#">Importação</a>
+                <a class="nav-link" href="#">&ltDesafio PHP/&gt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-warnings" href="indexProduct.php">Home</a>
             </li>
             <span class="linha-vertical"></span>
             <li class="nav-item">
-              <a class="nav-link" href="#">Exportação</a>
+              <a class="nav-link" href="createProduct.php">Adicionar Produto</a>
             </li>
             <span class="linha-vertical"></span>
             <li class="nav-item">
-              <a class="nav-link" href="#">Curso de Instrutor</a>
+              <a class="nav-link" href="createUser.php">Usuários</a>
             </li>
-            <span class="linha-vertical"></span>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Assessoria Jurídica</a>
-            </li>
+            <span class="linha-vertical"></span>         
           </ul>
         </div>
     </nav>

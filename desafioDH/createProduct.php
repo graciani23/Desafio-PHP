@@ -1,3 +1,33 @@
+<?php
+    require_once 'conexao.php';
+
+    $consulta = $conexaoDB-> prepare('SELECT * FROM produtos');
+
+    $resultado = $consulta-> execute();
+    $produtos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    // verificar se o formulário foi enviado
+    if(isset($_POST['cadastro-produto'])) {
+        // verificar campos preenchidos
+        if($_POST['nome'] != "" && $_POST['descricao'] != "" && $_POST['preco'] != "" && $_POST['foto'] != "") {
+            // prepara a query
+            $query = $conexaoDB->prepare('INSERT INTO produtos (produto, descricao, preco, foto) values (:produto, :descricao, :preco, :foto)');
+            var_dump($query);
+
+            $resultado = $query->execute([
+                ":produto" => $_POST['nome'],
+                ":descricao" => $_POST['descricao'],
+                ":preco" => $_POST['preco'],
+                ":foto" => $_POST['foto']
+            ]);
+            var_dump($resultado);
+
+            // se tudo der certo, redireciona para a lista de produtos
+            header('location: indexProduct.php');
+        }
+    }    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,50 +36,45 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
-    <title>Document</title>
+    <title>Criar Produto</title>
 </head>
 <body>
     <header>
         <div class="container">
-            <?php include 'assets/includes/nav.php' ?>
+            <?php include 'assets/includes/navbar.php'; ?>
         </div>
     </header>
     <main class="container">
-        <form>
+        <h1>Adicionar Produto</h1>
+        <form action="" method="post">
             <div class="config">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
-                    <input type="text" class="form-control">
+                    <input name="nome" id="nomeProduto" type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Preço</label>
-                    <input type="number" class="form-control">
+                    <input type="number" name="preco" id="preco" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Descrição</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" name="descricao" id="descricao" rows="3"></textarea>
             </div>
 
             <div class="input-group">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-                    <label class="custom-file-label" for="inputGroupFile04">Escolher arquivo</label>
+                    <input type="file" class="form-control" name="foto" id="foto">
+                    <label class="custom-file-label" for="foto">Selecione a foto</label>
                 </div>
                 
             </div>
             <br>
             <div class="input-group">
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button name="cadastro-produto" class="btn btn-primary">Adicionar</button>
             </div>
-
-
-
         </form>
     </main>
-
-
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

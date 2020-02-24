@@ -1,17 +1,43 @@
 <?php
-    session_start();
-    $prodAtualizado = $_POST;
+    require_once 'conexao.php';
 
-   $produtos = file_get_contents('produtos.json');
-   $produtodec = json_decode($produtos, true); 
-    
-   
-   //var_dump($_GET);
+    $consulta = $conexaoDB-> prepare('SELECT * FROM product');
 
-   
-   foreach ($produtodec as $produto) :
-    if ($produto['id'] == $_GET['id']) {
+    $resultado = $consulta-> execute();
+    $produtos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
+    // trazendo dados do produto
+    $produtoConsulta = $conexaoDB-> prepare('SELECT * FROM product where id = :id');
+    $produtoExecuta = $produtoConsulta-> execute([
+        ":id" => $_GET['id']
+    ]);
+
+    $produto = $produtoConsulta->fetch(PDO::FETCH_ASSOC);
+
+   // var_dump($produto);
+
+
+    // verificar se o formulário foi enviado
+    if(isset($_POST['excluir-produto'])) {
+        // verificar campos preenchidos
+        if($_POST['nome'] != "" && $_POST['descricao'] != "" && $_POST['preco'] != "") {
+            // prepara a query
+            $query = $conexaoDB->prepare('DELETE FROM product WHERE id = :id');
+            var_dump($query);
+
+            $resultado = $query->execute([
+                ":id" => $_GET['id'],
+                ":nome" => $_POST['nome'],
+                ":descricao" => $_POST['descricao'],
+                ":preco" => $_POST['preco'],
+                ":imagem" => $_POST['foto']
+            ]);
+            var_dump($resultado);
+
+            // se tudo der certo, redireciona para a lista de produtos
+            header('location: indexProduct.php');
+        }
+    }    
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +48,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
-    <title>Editar Produto</title>
+    <title>Ver Produto</title>
 </head>
 <body>
     <header>
@@ -32,12 +58,11 @@
     </header>
     <main class="container">
         <h1>Produto</h1>
-        <form action="val-editProduto.php" method="post" enctype="multpart/form-data">
-           
+        <form action="" method="post">
             <div class="config">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
-                    <input name="nome" id="nomeProduto" type="text" class="form-control"  value="<?php echo $produto['nome']; ?>">
+                    <input name="nome" id="nomeProduto" type="text" class="form-control" required value="<?php echo $produto['nome']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Preço</label>
@@ -61,11 +86,8 @@
             </div>
             <br>
             <div class="input-group">
-                <button name="editar-produto" class="btn btn-warning">Editar</button>
-            </div>   
-    <?php }
-        endforeach;
-    ?>
+                <button name="excluir-produto" class="btn btn-primary">Excluir</button>
+            </div>
         </form>
     </main>
 

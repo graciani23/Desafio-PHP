@@ -1,7 +1,3 @@
-<?php
-    var_dump($_POST);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,9 +27,8 @@
             </nav>
         </div>
     </header>
-
     <main class="container">
-        <form class="config-login" method="post" action="">
+        <form class="config-login">
             <div class="form-group">
                 <label for="exampleInputEmail1">E-mail</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
