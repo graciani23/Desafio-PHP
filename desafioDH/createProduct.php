@@ -6,25 +6,37 @@
     $resultado = $consulta-> execute();
     $produtos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
+    
+
     // verificar se o formulário foi enviado
     if(isset($_POST['cadastro-produto'])) {
-        // verificar campos preenchidos
-        if($_POST['nome'] != "" && $_POST['descricao'] != "" && $_POST['preco'] != "" && $_POST['foto'] != "") {
+        //upload imagem
+    if(isset($_FILES['foto'])) {
+        $extensao = strtolower(substr($_FILES['foto']['name'], -4));
+        $novo_nome = md5(time()) . $extensao;
+        $diretorio = "imagens/";
+
+        move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio.$novo_nome);
+        
+            // verificar campos preenchidos
+        if($_POST['nome'] != "" && $_POST['descricao'] != "" && $_POST['preco'] != "" && $_FILES['foto'] != "") {
             // prepara a query
             $query = $conexaoDB->prepare('INSERT INTO produtos (produto, descricao, preco, foto) values (:produto, :descricao, :preco, :foto)');
-            var_dump($query);
+            //var_dump($query);
 
             $resultado = $query->execute([
                 ":produto" => $_POST['nome'],
                 ":descricao" => $_POST['descricao'],
                 ":preco" => $_POST['preco'],
-                ":foto" => $_POST['foto']
+                ":foto" => $novo_nome,
             ]);
-            var_dump($resultado);
+            //var_dump($resultado);
 
             // se tudo der certo, redireciona para a lista de produtos
-            header('location: indexProduct.php');
+            //header('location: indexProduct.php');
         }
+
+    }
     }    
 ?>
 
@@ -46,7 +58,7 @@
     </header>
     <main class="container">
         <h1>Adicionar Produto</h1>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="config">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
@@ -61,12 +73,12 @@
                 <label for="exampleFormControlTextarea1">Descrição</label>
                 <textarea class="form-control" name="descricao" id="descricao" rows="3"></textarea>
             </div>
-
             <div class="input-group">
                 <div class="custom-file">
                     <input type="file" class="form-control" name="foto" id="foto">
                     <label class="custom-file-label" for="foto">Selecione a foto</label>
                 </div>
+
                 
             </div>
             <br>

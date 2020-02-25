@@ -1,13 +1,13 @@
 <?php
     require_once 'conexao.php';
 
-    $consulta = $conexaoDB-> prepare('SELECT * FROM product');
+    $consulta = $conexaoDB-> prepare('SELECT * FROM produtos');
 
     $resultado = $consulta-> execute();
     $produtos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
     // trazendo dados do produto
-    $produtoConsulta = $conexaoDB-> prepare('SELECT * FROM product where id = :id');
+    $produtoConsulta = $conexaoDB-> prepare('SELECT * FROM produtos where id = :id');
     $produtoExecuta = $produtoConsulta-> execute([
         ":id" => $_GET['id']
     ]);
@@ -22,15 +22,11 @@
         // verificar campos preenchidos
         if($_POST['nome'] != "" && $_POST['descricao'] != "" && $_POST['preco'] != "") {
             // prepara a query
-            $query = $conexaoDB->prepare('DELETE FROM product WHERE id = :id');
+            $query = $conexaoDB->prepare('DELETE FROM produtos WHERE id = :id');
             var_dump($query);
 
             $resultado = $query->execute([
                 ":id" => $_GET['id'],
-                ":nome" => $_POST['nome'],
-                ":descricao" => $_POST['descricao'],
-                ":preco" => $_POST['preco'],
-                ":imagem" => $_POST['foto']
             ]);
             var_dump($resultado);
 
@@ -59,10 +55,13 @@
     <main class="container">
         <h1>Produto</h1>
         <form action="" method="post">
+            <?php foreach ($produtos as $produto) :
+            if($produto['id'] == $_GET['id']){
+            ?>
             <div class="config">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
-                    <input name="nome" id="nomeProduto" type="text" class="form-control" required value="<?php echo $produto['nome']; ?>">
+                    <input name="nome" id="nomeProduto" type="text" class="form-control" required value="<?php echo $produto['produto']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Preço</label>
@@ -88,6 +87,9 @@
             <div class="input-group">
                 <button name="excluir-produto" class="btn btn-primary">Excluir</button>
             </div>
+            <?php }
+            endforeach;
+            ?>
         </form>
     </main>
 

@@ -32,3 +32,20 @@ main .config-login button {
     width: 50%;
     margin: 20px auto 20px auto;
 }
+
+
+.list-group-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.list-group-item div {
+    width: 50%;
+}
+
+.form-group img {
+    height: 250px;
+    
+}

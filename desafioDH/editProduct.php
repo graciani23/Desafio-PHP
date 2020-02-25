@@ -19,25 +19,34 @@
 
     // verificar se o formulário foi enviado
     if(isset($_POST['editar-produto'])) {
+        //upload imagem
+        if(isset($_FILES['foto'])) {
+            $extensao = strtolower(substr($_FILES['foto']['name'], -4));
+            $novo_nome = md5(time()) . $extensao;
+            $diretorio = "imagens/";
+
+            move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio.$novo_nome);
+        
         // verificar campos preenchidos
         if($_POST['nome'] != "" && $_POST['descricao'] != "" && $_POST['preco'] != "") {
             // prepara a query
-            $query = $conexaoDB->prepare('UPDATE produtos SET produto =:produto, descricao = :descricao, preco = :preco, foto = "sem-foto"  WHERE id = :id');
-            var_dump($query);
+            $query = $conexaoDB->prepare('UPDATE produtos SET produto =:produto, descricao = :descricao, preco = :preco, foto = :foto  WHERE id = :id');
+            //var_dump($query);
 
             $resultado = $query->execute([
                 ":id" => $_GET['id'],
                 ":produto" => $_POST['nome'],
                 ":descricao" => $_POST['descricao'],
                 ":preco" => $_POST['preco'],
-                //":foto" => $_POST['foto']
+                ":foto" => $novo_nome,
             ]);
-            var_dump($resultado);
+            //var_dump($resultado);
 
             // se tudo der certo, redireciona para a lista de produtos
             header('location: indexProduct.php');
         }
-    }    
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +67,7 @@
     </header>
     <main class="container">
         <h1>Produto</h1>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multpart/form-data">
         <?php foreach ($produtos as $produto) :
             if ($produto['id'] == $_GET['id']) {    
         ?>
@@ -77,12 +86,12 @@
                 <textarea class="form-control" name="descricao" id="descricao" rows="3"><?php echo $produto['descricao']; ?></textarea>
             </div>
             <div class="form-group">
-            
+                <img src="imagens/<?php echo $produto['foto']; ?>" alt="">
             </div>
 
             <div class="form-group">
                 <div class="custom-file">
-                    <input type="file" class="form-control" name="foto" id="foto" value="<?php echo $produto['foto'] ?>">
+                    <input type="file" class="form-control" name="foto" id="foto" value="<?php echo $produto['foto']; ?>">
                     <label class="custom-file-label" for="foto">Selecione a foto</label>
                 </div>
                 
