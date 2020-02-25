@@ -8,6 +8,7 @@
 
      // verificar se o formulário foi enviado
      if(isset($_POST['cadastro-usuario'])) {
+         include 'val-usuario.php';
         // verificar campos preenchidos
         if($_POST['nome'] != "" && $_POST['email'] != "" && $_POST['senha'] != "") {
             // prepara a query
@@ -48,6 +49,7 @@
         <div class="container">
             <div class="row">
                 <div class="usuarios col-md-4 border">
+                    <form action="val-usuario.php" method="post" enctype="multpart/form-data">
                     <h2>Usuários</h2>
                     <ul class="list-group list-group-flush">
                     <?php foreach ($usuarios as $usuario) : ?>
@@ -58,16 +60,17 @@
                                 </div>
                             <div class="botoes">
                                 <a href="editUser.php?id=<?php echo $usuario['id']; ?>" class="btn btn-primary">Editar</a>
-                                <a href="#" class="btn btn-danger">Excluir</a>
+                                <a href="/delete?id="<?php echo $usuario['id']; ?> class="btn btn-danger" name="excluir-usuario">Excluir</a>
                             </div>
                         </li>
                     <?php endforeach; ?>
                     </ul>
+                    </form>
                 </div>
 
                 <div class="col-md-8">
                     <h2>Adicionar Usuário</h2>
-                    <form action="" method="post" method="post" enctype="multpart/form-data">                      
+                    <form action="val-usuario.php" method="post" method="post" enctype="multpart/form-data">                      
                     <div class="form-group">
                             <label for="nome">Nome</label>
                             <input name="nome" id="nome" type="text" class="form-control">

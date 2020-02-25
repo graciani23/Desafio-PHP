@@ -12,15 +12,19 @@
             <li class="nav-item">
               <a class="nav-link text-warnings" href="indexProduct.php">Home</a>
             </li>
-            <span class="linha-vertical"></span>
             <li class="nav-item">
               <a class="nav-link" href="createProduct.php">Adicionar Produto</a>
             </li>
-            <span class="linha-vertical"></span>
             <li class="nav-item">
               <a class="nav-link" href="createUser.php">Usuários</a>
             </li>
-            <span class="linha-vertical"></span>         
+          </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav" style="margin-top: 13px">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="logout.php">Logout</a>
+            </li>
           </ul>
         </div>
     </nav>

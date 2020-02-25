@@ -34,7 +34,7 @@
             var_dump($resultado);
 
             // se tudo der certo, redireciona para a lista de produtos
-            header('location: createUser.php');
+            //header('location: createUser.php');
         }
     }
 
@@ -60,7 +60,7 @@
         <div class="container">
             <div class="row">
                 <div class="config-user">
-                    <h2>Adicionar Usuário</h2>
+                    <h2>Editar Usuário</h2>
                     <form action="" method="post" enctype="multpart/form-data">                 
                     <?php foreach ($usuarios as $usuario) :
                         if ($usuario['id'] == $_GET['id']) {

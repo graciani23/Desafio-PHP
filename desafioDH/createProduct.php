@@ -10,6 +10,7 @@
 
     // verificar se o formulário foi enviado
     if(isset($_POST['cadastro-produto'])) {
+        include 'val-produto.php';
         //upload imagem
     if(isset($_FILES['foto'])) {
         $extensao = strtolower(substr($_FILES['foto']['name'], -4));
@@ -58,11 +59,11 @@
     </header>
     <main class="container">
         <h1>Adicionar Produto</h1>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="val-produto.php" method="post" enctype="multipart/form-data">
             <div class="config">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
-                    <input name="nome" id="nomeProduto" type="text" class="form-control" required>
+                    <input name="nome" id="nomeProduto" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Preço</label>

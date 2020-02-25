@@ -1,3 +1,34 @@
+<?php
+    require_once 'conexao.php';
+    session_start();
+
+    $consulta = $conexaoDB-> prepare('SELECT * FROM usuarios');
+
+    $resultado = $consulta-> execute();
+    $usuarios = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    // verificar se o formulário foi enviado
+    if(isset($_POST['login'])) {
+       // verificar campos preenchidos
+       if($_POST['email'] != "" && $_POST['senha'] != "") {
+           //verificando se usuário já foi cadastrado
+            $usuarioConsulta = $conexaoDB-> prepare('SELECT id FROM usuarios where email = :email and senha = :senha');
+
+            $usuarioExecuta = $usuarioConsulta->execute([
+                ":email" => $_POST['email'],
+                ":senha" => $_POST['senha'],
+            ]);
+
+            $usuario = $usuarioConsulta->fetch(PDO::FETCH_ASSOC);
+            if($usuario != "") {
+                echo "Usuário cadastrado";
+            } else {
+                header ('location: createUser.php');
+            }
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,19 +59,19 @@
         </div>
     </header>
     <main class="container">
-        <form class="config-login">
+        <form method="post" action="" class="config-login" enctype="multpart/form-data">
             <div class="form-group">
                 <label for="exampleInputEmail1">E-mail</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Senha</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <input type="password" class="form-control" name="senha">
             </div>
             <div class="form-group">
                 <small><a href="createUser.php">Ainda não tenho cadastro</a></small>
             </div>
-            <button type="submit" class="btn btn-primary">Logar</button>
+            <button type="submit" class="btn btn-primary" name="login">Logar</button>
         </form>
     </main>
     

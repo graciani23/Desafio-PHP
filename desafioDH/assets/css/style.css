@@ -47,5 +47,10 @@ main .config-login button {
 
 .form-group img {
     height: 250px;
-    
+}
+
+.menu-naveg { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
