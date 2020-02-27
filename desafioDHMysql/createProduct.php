@@ -1,5 +1,6 @@
 <?php
     require_once 'conexao.php';
+    session_start();
 
     $consulta = $conexaoDB-> prepare('SELECT * FROM produtos');
 
@@ -8,9 +9,10 @@
 
     
 
-    // verificar se o formulário foi enviado
+    // // verificar se o formulário foi enviado
     if(isset($_POST['cadastro-produto'])) {
-        include 'val-produto.php';
+        var_dump($_POST);
+        //include 'val-produto.php';
         //upload imagem
     if(isset($_FILES['foto'])) {
         $extensao = strtolower(substr($_FILES['foto']['name'], -4));
@@ -34,11 +36,12 @@
             //var_dump($resultado);
 
             // se tudo der certo, redireciona para a lista de produtos
-            //header('location: indexProduct.php');
+            header('location: indexProduct.php');
         }
 
     }
-    }    
+     }    
+
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +62,7 @@
     </header>
     <main class="container">
         <h1>Adicionar Produto</h1>
-        <form action="val-produto.php" method="post" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="config">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nome</label>
@@ -79,8 +82,6 @@
                     <input type="file" class="form-control" name="foto" id="foto">
                     <label class="custom-file-label" for="foto">Selecione a foto</label>
                 </div>
-
-                
             </div>
             <br>
             <div class="input-group">

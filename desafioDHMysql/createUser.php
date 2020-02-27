@@ -1,5 +1,6 @@
 <?php
     require_once 'conexao.php';
+    session_start();
 
     $consulta = $conexaoDB-> prepare('SELECT * FROM usuarios');
 
@@ -8,7 +9,7 @@
 
      // verificar se o formulário foi enviado
      if(isset($_POST['cadastro-usuario'])) {
-         include 'val-usuario.php';
+         //include 'val-usuario.php';
         // verificar campos preenchidos
         if($_POST['nome'] != "" && $_POST['email'] != "" && $_POST['senha'] != "") {
             // prepara a query
@@ -20,7 +21,7 @@
                 ":email" => $_POST['email'],
                 ":senha" => md5($_POST['senha']),
             ]);
-            var_dump($resultado);
+            //var_dump($resultado);
 
             // se tudo der certo, redireciona para a lista de produtos
             //header('location: indexProduct.php');
@@ -49,7 +50,7 @@
         <div class="container">
             <div class="row">
                 <div class="usuarios col-md-4 border">
-                    <form action="val-usuario.php" method="post" enctype="multpart/form-data">
+                    <form action="" method="post" enctype="multpart/form-data">
                     <h2>Usuários</h2>
                     <ul class="list-group list-group-flush">
                     <?php foreach ($usuarios as $usuario) : ?>
@@ -70,7 +71,7 @@
 
                 <div class="col-md-8">
                     <h2>Adicionar Usuário</h2>
-                    <form action="val-usuario.php" method="post" method="post" enctype="multpart/form-data">                      
+                    <form action="" method="post" enctype="multpart/form-data">                      
                     <div class="form-group">
                             <label for="nome">Nome</label>
                             <input name="nome" id="nome" type="text" class="form-control">

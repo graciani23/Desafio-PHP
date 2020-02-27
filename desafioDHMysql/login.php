@@ -1,6 +1,6 @@
 <?php
+
     require_once 'conexao.php';
-    session_start();
 
     $consulta = $conexaoDB-> prepare('SELECT * FROM usuarios');
 
@@ -12,17 +12,21 @@
        // verificar campos preenchidos
        if($_POST['email'] != "" && $_POST['senha'] != "") {
            //verificando se usuário já foi cadastrado
-            $usuarioConsulta = $conexaoDB-> prepare('SELECT id FROM usuarios where email = :email and senha = :senha');
-
+            $usuarioConsulta = $conexaoDB-> prepare('SELECT id, senha, email FROM usuarios where email = :email');
             $usuarioExecuta = $usuarioConsulta->execute([
                 ":email" => $_POST['email'],
-                ":senha" => $_POST['senha'],
             ]);
 
             $usuario = $usuarioConsulta->fetch(PDO::FETCH_ASSOC);
-            if($usuario != "") {
-                echo "Usuário cadastrado";
-            } else {
+            var_dump($usuario['email']);
+            var_dump($usuario['senha']);
+            var_dump($usuario['id']);
+
+            if($usuario == "") {
+                echo "Usuário não cadastrado";
+            } elseif($usuario['email'] == $_POST['email']) {
+                session_start();
+                $_SESSION['nome'] = 'login';
                 header ('location: createUser.php');
             }
         }
